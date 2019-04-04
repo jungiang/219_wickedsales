@@ -9,18 +9,7 @@ class Sidenav extends React.Component {
     render() {
         return (
             <ul ref={(element)=>{this.sidenav = element}} id="sidenav" className="sidenav">
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/products">products</Link>
-                </li>
-                <li>
-                    <Link to="/">Sign In</Link>
-                </li>
-                <li>
-                    <Link to="/">Sign Up</Link>
-                </li>
+                {this.props.links}
             </ul>
         )
     }
