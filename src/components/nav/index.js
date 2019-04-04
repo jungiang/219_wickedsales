@@ -1,12 +1,24 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { Link } from 'react-router-dom';
-import products from '../products';
 import Sidenav from './sidenav';
 
 class Nav extends React.Component {
-    render() {
+    renderLinks() {
         return (
-            <div>
+            <Fragment>
+                <li>
+                    <Link to="/">Home</Link>
+                </li>
+                <li>
+                    <Link to="/products">Products</Link>
+                </li>
+            </Fragment>
+        )
+    }
+    render() {
+        const links = this.renderLinks();
+        return (
+            <Fragment>
                 <nav className="salmon darken-2">
                     <div className="nav-wrapper">
                         <Link className="brand-logo" to="/">Wicked Sales</Link>
@@ -14,17 +26,12 @@ class Nav extends React.Component {
                             <i className="material-icons">menu</i>
                         </a>
                         <ul className="right hide-on-med-and-down">
-                            <li>
-                                <Link to="/">Home</Link>
-                            </li>
-                            <li>
-                                <Link to="/products">products</Link>
-                            </li>
+                            {links}
                         </ul>
                     </div>
                 </nav>
-                <Sidenav/>
-            </div>
+                <Sidenav links={links}/>
+            </Fragment>
         )
     }
 }
