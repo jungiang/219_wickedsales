@@ -9,7 +9,7 @@
 
     $id = (int)$_GET['productId'];
 
-    $query = 'SELECT p.`id`, p.`name`, p.`price`, p.`description`, p.`misc_details` AS `miscDetails`, GROUP_CONCAT(i.`url`) AS `images` FROM `products` AS p JOIN `images` AS i ON p.`id` = i.`products_id` WHERE p.`id` = $id GROUP BY p.`id`';
+    $query = "SELECT p.`id`, p.`name`, p.`price`, p.`description`, p.`misc_details` AS `miscDetails`, GROUP_CONCAT(i.`url`) AS `images` FROM `products` AS p JOIN `images` AS i ON p.`id` = i.`products_id` WHERE p.`id` = $id GROUP BY p.`id`";
 
     $result = mysqli_query($conn, $query);
 
@@ -22,17 +22,14 @@
     };
 
     $data = mysqli_fetch_assoc($result);
-
-    $data['price'] = intVal($data['price']);
-    $data['miscDetails'] = json_decode($data['miscDetails']);
+    $data['price'] = intval($data['price']);
+    $data['miscDetails'] = json_decode($data['miscDetails'], true);
     $data['images'] = explode(',', $data['images']);
-
     $output = [
         'success'=>true,
         'productInfo'=>$data
     ];
-
+    
     $json_output = json_encode($output);
-
     print($json_output);
 ?>
