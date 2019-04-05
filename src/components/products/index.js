@@ -4,7 +4,6 @@ import ProductList from './product_list';
 import ProductDetails from './product_details';
 
 export default props => {
-    console.log(props.match.path);
     return (
         <div>
             <Route exact path="/products" component={ProductList}/>
