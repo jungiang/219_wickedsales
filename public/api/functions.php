@@ -12,7 +12,7 @@ if(!function_exists('handleError')){
 if(!function_exists('handleCors')){
     function handleCors(){
         header("Acess-Control-Allow-Origin: *");
-        if($_SERVER['REQUEST_METHOD']==='OPTIONS')){
+        if($_SERVER['REQUEST_METHOD']==='OPTIONS'){
             header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
             exit();
         };
