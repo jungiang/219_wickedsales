@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 class Sidenav extends React.Component {
     componentDidMount(){
-        console.log('Sidenav Mounted', this.sidenav);
         M.Sidenav.init(this.sidenav);
     }
     render() {

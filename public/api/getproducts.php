@@ -1,5 +1,6 @@
 <?php
     // readfile('./data/getproducts.json');
+    require_once('config.php');
     require_once('mysqlconnect.php');
     require_once('functions.php');
 
@@ -22,7 +23,6 @@
         $currentID = $row['id'];
         $images = $row['images'];
         if(isset($data[$currentID])){
-            $data[$currentID]['images'][] = $row['images'];
             $data[$currentID]['images'][] = $images; 
             // array_push($data[$currentID]['images'], $image); old push method
         }else{
@@ -44,11 +44,6 @@
         'success' => true,
         'products' => $pureData
     ];
-
-    // $output = [
-    //     'success' => true,
-    //     'products' => $data
-    // ];
 
     $json_output = json_encode($output);
 
