@@ -3,8 +3,11 @@
     set_exception_handler('handleError');
     require_once('config.php');
     require_once('mysqlconnect.php');
+    if(empty($_GET['product_id'])){
+        throw new Exception('You must send a proudct_id(int) with your request');
+    };
 
-    $product_id = 1;
+    $product_id = intval($_GET['product_id']);
     $product_quantity = 1;
     $user_id = 1;
     $query = "SELECT `price` FROM `products` WHERE `id`=$product_id";
@@ -23,7 +26,7 @@
 
     $product_total = $product_price * $product_quantity;
 
-    if(empty($cart_id)){
+    if(empty($_SESSION['cart_id'])){
         $cart_create_query = "INSERT INTO `carts` SET 
         `item_count`=$product_quantity, 
         `total_price`=$product_total,
@@ -38,11 +41,16 @@
             throw new Exception('cart table was not added');
         };
         $cart_id = mysqli_insert_id($conn);
+        $_SESSION['cart_id'] = $cart_id;
+    }else{
+        $cart_id = $_SESSION['cart_id'];
     };
     $cart_item_query = "INSERT INTO `cart_items` SET
     `products_id`=$product_id,
     `quantity`=$product_quantity,
-    `carts_id`=$cart_id";
+    `carts_id`=$cart_id
+    ON DUPLICATE KEY UPDATE
+    `quantity`=`quantity` + $product_quantity";
     
     $cart_item_result = mysqli_query($conn, $cart_item_query);
 
