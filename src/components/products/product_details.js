@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import ProductCarousel from './product_carousel';
 
 class ProductDetails extends React.Component{    
     state = {
@@ -26,11 +27,12 @@ class ProductDetails extends React.Component{
             return <h1>No Product Found</h1>
         }
 
-        const {description = 'No description available', name} = details;
+        const {description = 'No description available', name, images} = details;
 
         return (
             <div className="product-details">
                 <h1 className="center">{name}</h1>
+                <ProductCarousel images={images}/>
                 <p>{description}</p>
             </div>
         );
