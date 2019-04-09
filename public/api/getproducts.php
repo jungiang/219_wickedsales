@@ -1,10 +1,9 @@
 <?php
     // readfile('./data/getproducts.json');
+    require_once('functions.php');
+    set_exception_handler('handleError');
     require_once('config.php');
     require_once('mysqlconnect.php');
-    require_once('functions.php');
-
-    set_exception_handler('handleError');
 
     // $query = 'SELECT * FROM `products`';
     $query = 'SELECT p.`id`, p.`name`, p.`price`, i.`url` AS `images` FROM `products` AS p JOIN `images` AS i ON p.`id` = i.`products_id` ORDER BY p.`id`';
