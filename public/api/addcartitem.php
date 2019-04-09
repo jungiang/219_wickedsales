@@ -54,6 +54,21 @@
         if(mysqli_affected_rows($conn) === 0){
             throw new Exception('cart data was not updated');
         }
+
+        $cart_query = "SELECT `item_count`, `total_price` FROM `cart` WHERE `id`=$cart_id";
+        $cart_result = mysqli_query($conn, $cart_query);
+
+        if(!$cart_result){
+            throw new Exception(mysqli_error($conn));
+        }
+
+        if(mysqli_num_rows($cart_result)){
+            throw new Exception('No cart data was found');
+        }
+
+        while($row = mysqli_fetch_assoc($cart_result)){
+            print_r($row);
+        }
     };
     $cart_item_query = "INSERT INTO `cart_items` SET
     `products_id`=$product_id,
