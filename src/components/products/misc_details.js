@@ -3,8 +3,6 @@ import {toWords} from '../../helpers';
 
 export default props => {
     const {details} = props;
-    console.log('Misc Details Props:', details);
-    console.log('Object Keys:', Object.keys(details));
     const additionalInfo = Object.keys(details).map(key=>{
         let values = details[key];
         values = Array.isArray(values) ? values.join(', ') : values;
