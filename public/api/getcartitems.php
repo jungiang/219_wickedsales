@@ -10,9 +10,10 @@
         throw new Exception('Missing cart id');
     }
 
+    $user_id = 1;
     $cart_id = $_SESSION['cart_id'];
 
-    $query = "SELECT c.`created`, c.`total_price`, `ci`.`quantity`, p.`id`, p.`name`, p.`price`, (SELECT url FROM `images` AS i WHERE i.`products_id`=p.`id` LIMIT 1) AS image FROM `carts` AS c JOIN cart_items AS ci ON c.`id`=ci.`carts_id` JOIN `products` AS p ON ci.`products_id`=p.`id` WHERE c.`id` = 1";
+    $query = "SELECT c.`created`, c.`total_price`, `ci`.`quantity`, p.`id`, p.`name`, p.`price`, (SELECT url FROM `images` AS i WHERE i.`products_id`=p.`id` LIMIT 1) AS image FROM `carts` AS c JOIN cart_items AS ci ON c.`id`=ci.`carts_id` JOIN `products` AS p ON ci.`products_id`=p.`id` WHERE c.`id` = $cart_id AND c.`users_id`=$user_id";
 
     $result = mysqli_query($conn, $query);
 
@@ -23,26 +24,6 @@
     if(!mysqli_num_rows($result)){
         throw new Exception('Unable to retrieve cart data');
     }
-
-    //Using new stdClass Object (pointless, A.Array shows as Object)
-    // $cartItems = [];
-    // $cartMetaData = new stdClass();
-    // while($row = mysqli_fetch_assoc($result)){
-    //     $cart_item = new stdClass();
-    //     $cart_item->name = $row['name'];
-    //     $cart_item->price = (int)$row['price'];
-    //     $cart_item->images = $row['image'];
-    //     $cart_item->quantity = (int)$row['quantity'];
-    //     $cart_item->id = (int)$row['id'];
-    //     $cartItems[] = $cart_item;
-    //     $cartMetaData->created = $row['created'];
-    //     $cartMetaData->total_price = $row['total_price'];
-    // }
-    // $output = [
-    //     'success'=>true,
-    //     'cartItems'=>$cartItems,
-    //     'cartMetaData'=>$cartMetaData
-    // ];
 
     while($row = mysqli_fetch_assoc($result)){
         $output['cartItems'][] = [
