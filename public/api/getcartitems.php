@@ -4,6 +4,8 @@
     require_once('config.php');
     require_once('mysqlconnect.php');
 
+    $output['success'] = false;
+
     if(empty($_SESSION['cart_id'])){
         throw new Exception('Missing cart id');
     }
@@ -41,8 +43,6 @@
     //     'cartItems'=>$cartItems,
     //     'cartMetaData'=>$cartMetaData
     // ];
-
-    $output['success'] = false;
 
     while($row = mysqli_fetch_assoc($result)){
         $output['cartItems'][] = [
