@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import {withRouter} from 'react-router-dom';
 
 class ProductAdd extends React.Component {
     constructor(props){
@@ -16,7 +18,11 @@ class ProductAdd extends React.Component {
         })
     }
     addToCart(){
-        console.log('Add', this.state.qty, 'product to cart, ID:', this.props.productId);
+        const {productId} = this.props;
+        const {qty} = this.state;
+        axios.get(`/api/addcartitem.php?product_id=${productId}&quantity=${qty}`).then(resp=>{
+            this.props.history.push('/cart');
+        })
     }
     decrementQty(){
         if(this.state.qty > 1){
@@ -45,4 +51,4 @@ class ProductAdd extends React.Component {
     }
 }
 
-export default ProductAdd;
+export default withRouter(ProductAdd);

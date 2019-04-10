@@ -7,6 +7,7 @@ import ProductRoutes from './products';
 import Home from './products/home';
 import Nav from './nav';
 import NotFound from './404';
+import Cart from './cart';
 
 const App = () => (
     <div>
@@ -15,6 +16,7 @@ const App = () => (
             <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route path="/products" component={ProductRoutes}/>
+                <Route path="/cart" component={Cart}/>
                 <Route component={NotFound}/>
             </Switch>
         </div>
