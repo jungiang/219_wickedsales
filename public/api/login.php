@@ -19,7 +19,8 @@
     }
 
     $email = $input['email'];
-    $password = $input['password'];
+    $email = addslashes($email);//sanitize
+    $password = $input['password'];//no need to santize since it gets hashed anyway
     $hashedPassword = sha1($password);
 
     unset($input['password']);//get rid of password since it's dangerous
