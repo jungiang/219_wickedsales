@@ -28,10 +28,10 @@
     while($row = mysqli_fetch_assoc($result)){
         $output['cartItems'][] = [
             'name' => $row['name'],
-            'price' => $row['price'],
+            'price' => (int)$row['price'],
             'image' => $row['image'],
-            'quantity' => $row['quantity'],
-            'id' => $row['id'],
+            'quantity' => (int)$row['quantity'],
+            'id' => (int)$row['id'],
         ];
         $output['cartMetaData']['created'] = $row['created'];
         $output['cartMetaData']['total'] = $row['total_price'];
