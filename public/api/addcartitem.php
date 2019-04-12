@@ -3,13 +3,19 @@
     set_exception_handler('handleError');
     require_once('config.php');
     require_once('mysqlconnect.php');
+
+    $product_quantity = 1;
+
+    if(!empty($_GET['quantity'])){
+        $product_quantity = $_GET['quantity'];
+    }
+
     if(empty($_GET['product_id'])){
         throw new Exception('You must send a proudct_id(int) with your request');
     };
 
     $product_id = intval($_GET['product_id']);
-    $cart_quantity = $product_quantity = 1;
-    // $product_quantity = 1;
+    $cart_quantity = $product_quantity;
     $user_id = 1;
     $query = "SELECT `price` FROM `products` WHERE `id`=$product_id";
     $result = mysqli_query($conn, $query);
