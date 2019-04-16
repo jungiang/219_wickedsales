@@ -19,15 +19,20 @@
     }
 
     $email = $input['email'];
-    $email = addslashes($email);//sanitize
+    // $email = addslashes($email);//quick sanitize: \' now it's just a apostrophe
     $password = $input['password'];//no need to santize since it gets hashed anyway
     $hashedPassword = sha1($password);
 
     unset($input['password']);//get rid of password since it's dangerous
 
-    $query="SELECT `id`, `name` FROM `users` WHERE `email`='$email' AND `password`='$hashedPassword'";
+    $query="SELECT `id`, `name` FROM `users` WHERE `email`= ? AND `password`= ?";
 
-    $result = mysqli_query($conn, $query);
+    $statement = mysqli_prepare($conn, $query);//send the safe query to the DB (added ?)
+    mysqli_stmt_bind_param($statement, 'ss', $email, $hashedPassword);//send the dangerous data to the DB
+    $result = mysqli_stmt_execute($statement);//tell the DB to mix the query and the data
+    $result = mysqli_stmt_get_result($statement);//get the result pointer for the prepared query statement's data; use result as normal
+
+    // $result = mysqli_query($conn, $query); unsafe method -> USE PREPARED STATEMENT
 
     if(!$result){
         throw new Exception('invalid query:', mysqli_error($conn));
