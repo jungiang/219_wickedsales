@@ -4,6 +4,7 @@ import 'materialize-css/dist/js/materialize.min'
 import '../assets/css/app.scss';
 import axios from 'axios';
 import {Route, Switch} from 'react-router-dom';
+import AccountRoutes from './account';
 import ProductRoutes from './products';
 import Home from './products/home';
 import Nav from './nav';
@@ -43,6 +44,7 @@ class App extends React.Component {
                             <ProductRoutes {...routingProps} updateCart={this.updateCartItems}/>
                             )}/>
                         <Route path="/cart" component={Cart}/>
+                        <Route path="/account" component={AccountRoutes}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </div>
