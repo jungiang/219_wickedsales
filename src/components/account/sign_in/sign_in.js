@@ -1,9 +1,12 @@
 import React from 'react';
+import {connect} from 'react-redux'
 import SignInForm from './sign_in_form';
+import {signIn} from '../../../actions';
 
 class SignIn extends React.Component {
-    handleSignIn(values){
+    handleSignIn = (values) =>{
         console.log(values);
+        this.props.signIn(values);
     }
     render() {
         return (
@@ -15,4 +18,10 @@ class SignIn extends React.Component {
     }
 }
 
-export default SignIn;
+// function mapToStateToProps(){
+
+// }
+
+export default connect(null, {
+    signIn
+})(SignIn);
