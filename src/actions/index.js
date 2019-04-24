@@ -1,10 +1,21 @@
 import types from './types';
+import axios from 'axios';
 
 export const signIn = user => {
-    console.log('Sign In Action Creator, user data:', user);
-    return {
-        type: types.SIGN_IN,
-        email: user.email
+    return function (dispatch) {
+        axios.get('/api/sign-in.php').then(resp => {
+            console.log(resp);
+            if (resp.data.success) {
+                dispatch({
+                    type: types.SIGN_IN
+                })
+            } else {
+                dispatch({
+                    type: types.SIGN_IN_ERROR
+                })
+            }
+
+        })
     }
 }
 
@@ -13,5 +24,16 @@ export const signIn = user => {
 export const signOut = () => {
     return {
         type: types.SIGN_OUT
+    }
+}
+
+export function getAllProducts() {
+    return function (dispatch) {
+        axios.get('/api/getproducts.php').then((resp) => {
+            dispatch({
+                type: types.GET_ALL_PRODUCTS,
+                products: resp.data.products
+            })
+        })
     }
 }
