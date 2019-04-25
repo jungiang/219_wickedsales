@@ -1,13 +1,42 @@
 import types from './types';
 import axios from 'axios';
 
+export const checkAuth = () => async dispatch=> {
+    const {data: {success, email}} = await axios.get('/api/check-auth.php');
+    if(success){
+        return dispatch({
+            type: types.SIGN_IN,
+            email
+        })
+    }
+    
+    return dispatch({
+        type: types.SIGN_OUT
+    })
+
+    // const resp = await axios.get('/api/check-auth.php');
+
+    // if(resp.data.success){
+    //     dispatch({
+    //         type: types.SIGN_IN,
+    //         email: resp.data.email
+    //     })
+    // }else{
+    //     dispatch({
+    //         type: types.SIGN_OUT
+    //     })
+    // }
+}
+
 export const signIn = user => {
     return function (dispatch) {
-        axios.get('/api/sign-in.php').then(resp => {
+        axios.post('/api/sign-in.php', user).then(resp => {
             console.log(resp);
             if (resp.data.success) {
+                localStorage.setItem('signedIn', true);
                 dispatch({
-                    type: types.SIGN_IN
+                    type: types.SIGN_IN,
+                    email: resp.data.email
                 })
             } else {
                 dispatch({
@@ -22,8 +51,13 @@ export const signIn = user => {
 //Make action creator for sign out
 //Make the action type SIGN_OUT
 export const signOut = () => {
-    return {
-        type: types.SIGN_OUT
+    return function(dispatch){
+        axios.get('/api/sign-out.php').then(resp=>{
+            localStorage.removeItem('signedIn');
+            dispatch({
+                type: types.SIGN_OUT
+            })
+        })
     }
 }
 
