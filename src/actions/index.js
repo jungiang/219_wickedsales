@@ -13,25 +13,11 @@ export const checkAuth = () => async dispatch=> {
     return dispatch({
         type: types.SIGN_OUT
     })
-
-    // const resp = await axios.get('/api/check-auth.php');
-
-    // if(resp.data.success){
-    //     dispatch({
-    //         type: types.SIGN_IN,
-    //         email: resp.data.email
-    //     })
-    // }else{
-    //     dispatch({
-    //         type: types.SIGN_OUT
-    //     })
-    // }
 }
 
 export const signIn = user => {
     return function (dispatch) {
         axios.post('/api/sign-in.php', user).then(resp => {
-            console.log(resp);
             if (resp.data.success) {
                 localStorage.setItem('signedIn', true);
                 dispatch({
